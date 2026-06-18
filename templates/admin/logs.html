@@ -318,7 +318,7 @@
                         updateStats(data.stats);
                         document.getElementById('last-update').textContent = new Date().toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'});
                     } else {
-                        throw new Error('Invalid data format');
+                        throw new Error('数据格式无效');
                     }
                 } catch (error) {
                     document.getElementById('log-container').innerHTML = '<div class="log-entry ERROR">加载失败: ' + error.message + '</div>';
