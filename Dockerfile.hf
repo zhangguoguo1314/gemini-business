@@ -4,6 +4,9 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+# HuggingFace Spaces 要求创建 user (UID 1000)
+RUN useradd -m -u 1000 user
+
 # 安装基础依赖
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
@@ -21,13 +24,16 @@ COPY templates ./templates
 COPY static ./static
 
 # 创建数据目录
-RUN mkdir -p /data/images
+RUN mkdir -p /data/images && chown -R user:user /app /data
 
 # 环境变量
 ENV DATA_DIR=/data
 ENV ENABLE_REGISTER_SERVICE=false
 ENV TZ=Asia/Shanghai
 ENV PORT=7860
+ENV HOME=/home/user
+
+USER user
 
 EXPOSE 7860
 
